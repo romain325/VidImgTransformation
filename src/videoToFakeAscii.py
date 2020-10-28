@@ -51,7 +51,7 @@ def main(argv):
     createTmpFolder(currFolder)
     saveAllFrames(inputfile, outputfile, 1/framerate)
     for i in getGlobItems(currFolder, "tmp"):
-        ConvToAscii(i)
+        ConvToAscii(i, True)
 
     video_creation(currFolder, outputfile, framerate)
     

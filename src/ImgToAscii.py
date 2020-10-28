@@ -12,8 +12,12 @@ def getAverageL(image):
     return np.average(im.reshape(w*h)) 
 
 
-def ConvToAscii(imagePath):
-    img = Image.open(imagePath)
+def ConvToAscii(image, isFile):
+    if isFile:
+        img = Image.open(image)
+    else:
+        img = Image.fromarray(image)
+
     aimg = []
     gscale1 = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. "
     gscale2 = '@%#*+=-:. '
@@ -63,16 +67,16 @@ def ConvToAscii(imagePath):
             avg = int(getAverageL(part.convert('L'))) 
   
             # TODO CLI arg to choose set
-            #gsval = gscale2[int((avg*9)/255)]
-            gsval = gscale1[int((avg*69)/255)] 
+            gsval = gscale2[int((avg*9)/255)]
+            #gsval = gscale1[int((avg*69)/255)] 
 
 
             font = ImageFont.truetype(os.getcwd() + "/src/ASCII/Lucon.ttf",36)
             draw.text((int(i*w), int(j*h)), gsval, fill=(int(color[0]), int(color[1]), int(color[2])), font=font)
 
             aimg[j] += gsval 
-      
-    for r in aimg:
-        print(r)
-    outputImage.save(imagePath)
+
+    if isFile:
+        outputImage.save(image)
+
     return aimg 
